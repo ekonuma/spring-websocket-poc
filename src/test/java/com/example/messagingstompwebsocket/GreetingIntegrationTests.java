@@ -1,6 +1,7 @@
 package com.example.messagingstompwebsocket;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.lang.reflect.Type;
 import java.util.concurrent.CountDownLatch;
@@ -9,8 +10,8 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.messaging.converter.MappingJackson2MessageConverter;
 import org.springframework.messaging.simp.stomp.StompCommand;
 import org.springframework.messaging.simp.stomp.StompFrameHandler;
@@ -22,11 +23,12 @@ import org.springframework.web.socket.WebSocketHttpHeaders;
 import org.springframework.web.socket.client.WebSocketClient;
 import org.springframework.web.socket.client.standard.StandardWebSocketClient;
 import org.springframework.web.socket.messaging.WebSocketStompClient;
-import org.springframework.boot.test.web.server.LocalServerPort;
 
+import com.ekonuma.springwebsocketpoc.models.messages.ChatMessage;
+import com.ekonuma.springwebsocketpoc.models.messages.UserSendMessage;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class GreetingIntegrationTests {
+class GreetingIntegrationTests {
 
 	@LocalServerPort
 	private int port;
@@ -43,7 +45,7 @@ public class GreetingIntegrationTests {
 	}
 
 	@Test
-	public void getGreeting() throws Exception {
+	void getGreeting() throws Exception {
 
 		final CountDownLatch latch = new CountDownLatch(1);
 		final AtomicReference<Throwable> failure = new AtomicReference<>();
@@ -55,14 +57,14 @@ public class GreetingIntegrationTests {
 				session.subscribe("/topic/greetings", new StompFrameHandler() {
 					@Override
 					public Type getPayloadType(StompHeaders headers) {
-						return Greeting.class;
+						return ChatMessage.class;
 					}
 
 					@Override
 					public void handleFrame(StompHeaders headers, Object payload) {
-						Greeting greeting = (Greeting) payload;
+						ChatMessage greeting = (ChatMessage) payload;
 						try {
-							assertEquals("Hello, Spring!", greeting.getContent());
+							assertEquals("Hello, Spring!", greeting.content());
 						} catch (Throwable t) {
 							failure.set(t);
 						} finally {
@@ -72,7 +74,7 @@ public class GreetingIntegrationTests {
 					}
 				});
 				try {
-					session.send("/app/hello", new HelloMessage("Spring"));
+					session.send("/app/hello", new UserSendMessage("Spring"));
 				} catch (Throwable t) {
 					failure.set(t);
 					latch.countDown();
@@ -86,8 +88,7 @@ public class GreetingIntegrationTests {
 			if (failure.get() != null) {
 				throw new AssertionError("", failure.get());
 			}
-		}
-		else {
+		} else {
 			fail("Greeting not received");
 		}
 

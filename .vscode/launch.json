@@ -1,0 +1,38 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "WebsocketStompMessagingApplication",
+            "request": "launch",
+            "mainClass": "com.ekonuma.springwebsocketpoc.WebsocketStompMessagingApplication",
+            "projectName": "messaging-stomp-websocket-complete"
+        },
+        {
+            "type": "java",
+            "name": "WebsocketStompMessagingApplication",
+            "request": "launch",
+            "mainClass": "com.ekonuma.messagingstompwebsocket.WebsocketStompMessagingApplication",
+            "projectName": "messaging-stomp-websocket-complete"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-WebsocketStompMessagingApplication<spring-websocket-poc>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.example.messagingstompwebsocket.WebsocketStompMessagingApplication",
+            "projectName": "spring-websocket-poc",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-MessagingStompWebsocketApplication<messaging-stomp-websocket-complete>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.example.messagingstompwebsocket.MessagingStompWebsocketApplication",
+            "projectName": "messaging-stomp-websocket-complete",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

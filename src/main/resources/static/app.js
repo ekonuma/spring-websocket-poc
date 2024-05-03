@@ -1,12 +1,15 @@
 const stompClient = new StompJs.Client({
-    brokerURL: 'ws://localhost:8080/gs-guide-websocket'
+    brokerURL: 'ws://localhost:8080/chat'
 });
 
 stompClient.onConnect = (frame) => {
     setConnected(true);
     console.log('Connected: ' + frame);
-    stompClient.subscribe('/topic/greetings', (greeting) => {
-        showGreeting(JSON.parse(greeting.body).content);
+    stompClient.subscribe('/topic/messages', (chatMessage) => {
+        showGreeting(JSON.parse(chatMessage.body).content);
+    });
+    stompClient.subscribe('/topic/room', (roomMessage) => {
+        changeRoomName(JSON.parse(roomMessage.body).content);
     });
 };
 
