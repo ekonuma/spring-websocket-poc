@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.ekonuma</groupId>
 	<artifactId>spring-websocket-poc</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<name>spring-websocket-poc</name>
 	<description>Demo project for Spring Websocket with events</description>
 	<properties>

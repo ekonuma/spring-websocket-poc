@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ekonuma.springwebsocketpoc.models.RoomPatchNameDTO;
+import com.ekonuma.springwebsocketpoc.models.events.RoomPatchNameEvent;
 
 @RestController
 @RequestMapping("/room")
@@ -20,8 +21,8 @@ public class ChatRestController {
   }
 
   @PatchMapping("/name")
-  public ResponseEntity<Void> greeting(@RequestBody String roomName) {
-    publisher.publishEvent(new RoomPatchNameDTO(roomName));
+  public ResponseEntity<Void> greeting(@RequestBody RoomPatchNameDTO roomNamePatchDTO) {
+    publisher.publishEvent(new RoomPatchNameEvent(roomNamePatchDTO.roomName()));
     return ResponseEntity.accepted().build();
   }
 }

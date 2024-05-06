@@ -11,8 +11,8 @@ import com.ekonuma.springwebsocketpoc.models.messages.UserSendMessage;
 @Controller
 public class ChatWebsocketController {
 
-	@MessageMapping("/hello")
-	@SendTo("/topic/greetings")
+	@MessageMapping("/send-message")
+	@SendTo("/topic/messages")
 	public ChatMessage greeting(SimpMessageHeaderAccessor headerAccessor, UserSendMessage message) {
 		return new ChatMessage(String.format("%s: %s", headerAccessor.getSessionId(), message.name()));
 	}
