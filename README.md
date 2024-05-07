@@ -1,1 +1,1 @@
-# spring-websocket-poc
+# spring-websocket-stomp-poc
